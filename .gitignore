@@ -1,0 +1,28 @@
+# Build outputs
+build/
+out/
+bin/
+obj/
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Database data and temp files
+*.data
+*.db
+
+# Documentations not for release
+STUDY-GUIDE.md
+*Design.md
+
+# IDE configurations
+.vs/
+.vscode/
+.idea/
+CMakeSettings.json
+CMakeUserPresets.json
