@@ -66,6 +66,8 @@ a corrupted record, and torn-tail recovery.
 
 ## Deliberately not built (discussion / future work)
 
+Due to certain trade off decisions in this project ; focusing to come to optimal trade off points. :)
+
 Compaction (merging the log to reclaim space), hint files for faster startup,
 multiple data files with rotation, a reader-writer lock and a thread pool, and
 range queries.
