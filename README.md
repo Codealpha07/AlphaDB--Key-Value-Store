@@ -1,5 +1,7 @@
 # AlphaDB
 
+[![CI](https://github.com/Codealpha07/AlphaDB--Key-Value-Store/actions/workflows/ci.yml/badge.svg)](https://github.com/Codealpha07/AlphaDB--Key-Value-Store/actions/workflows/ci.yml)
+
 A small, persistent **key-value store** written in C++17, modeled on
 **Bitcask** (the storage engine behind Riak). Every write is appended to a log
 file on disk; an in-memory hash table maps each key to the byte offset of its
@@ -83,6 +85,9 @@ The tests cover put, get, overwrite and delete; persistence across a restart; th
 CRC rejecting a corrupted record; and recovery from a torn tail. The torn tail is
 simulated by appending bytes to the file. Nothing yet kills a process, injects an
 I/O error, or exercises the server or concurrency.
+
+CI builds and runs the tests on Linux and Windows on every push, plus a Linux
+build with AddressSanitizer and UndefinedBehaviorSanitizer.
 
 ## Known limitations
 
