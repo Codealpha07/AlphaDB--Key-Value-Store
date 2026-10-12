@@ -8,6 +8,7 @@
 
 #ifdef _WIN32
 #include <io.h>
+#include <share.h>     // _SH_DENYNO for _sopen_s
 #include <sys/stat.h>
 
 #ifndef O_RDWR
@@ -79,7 +80,7 @@ static inline int file_ftruncate(int fd, int64_t length) {
 }
 #endif
 
-namespace ledgerdb {
+namespace alphadb {
 
 // ---------------------------------------------------------------------------
 // Construction / destruction
@@ -238,4 +239,4 @@ std::size_t Engine::size() {
     return keydir_.size();
 }
 
-} // namespace ledgerdb
+} // namespace alphadb

@@ -19,6 +19,7 @@ obj/
 # Documentations not for release
 STUDY-GUIDE.md
 *Design.md
+INTERVIEW-*.md
 
 # IDE configurations
 .vs/

@@ -34,7 +34,7 @@ static inline ssize_t sock_write(socket_t s, const char* buf, size_t len) {
 #define IS_INVALID_SOCKET(s) ((s) < 0)
 #endif
 
-namespace ledgerdb {
+namespace alphadb {
 
 Server::Server(Engine& engine, int port) : engine_(engine), port_(port) {}
 
@@ -135,7 +135,7 @@ void Server::run() {
     if (::listen(listen_fd, 16) < 0)
         throw std::runtime_error("listen() failed");
 
-    std::cout << "LedgerDB listening on port " << port_ << " ...\n";
+    std::cout << "AlphaDB listening on port " << port_ << " ...\n";
 
     while (true) {
         socket_t client_fd = ::accept(listen_fd, nullptr, nullptr);
@@ -149,4 +149,4 @@ void Server::run() {
 #endif
 }
 
-} // namespace ledgerdb
+} // namespace alphadb

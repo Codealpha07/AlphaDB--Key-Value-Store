@@ -27,9 +27,9 @@ static int g_failures = 0;
 // Each test uses a fresh file so runs don't interfere.
 static std::string fresh_file(const char* name) {
 #ifdef _WIN32
-    std::string path = std::string("ledgerdb_test_") + name + ".data";
+    std::string path = std::string("alphadb_test_") + name + ".data";
 #else
-    std::string path = std::string("/tmp/ledgerdb_test_") + name + ".data";
+    std::string path = std::string("/tmp/alphadb_test_") + name + ".data";
 #endif
     std::remove(path.c_str());
     return path;
@@ -39,7 +39,7 @@ static std::string fresh_file(const char* name) {
 static void test_basic() {
     std::printf("[test_basic]\n");
     std::string f = fresh_file("basic");
-    ledgerdb::Engine db(f);
+    alphadb::Engine db(f);
 
     CHECK(!db.get("missing").has_value());       // absent key -> nullopt
 
@@ -63,14 +63,14 @@ static void test_persistence() {
     std::printf("[test_persistence]\n");
     std::string f = fresh_file("persist");
     {
-        ledgerdb::Engine db(f);                    // open #1
+        alphadb::Engine db(f);                    // open #1
         db.put("a", "1");
         db.put("b", "2");
         db.put("a", "11");                       // overwrite
         db.del("b");                             // tombstone
     }                                            // db destroyed = process "exits"
 
-    ledgerdb::Engine db2(f);                       // open #2: replays the log
+    alphadb::Engine db2(f);                       // open #2: replays the log
     CHECK(db2.get("a").value() == "11");         // newest value survived
     CHECK(!db2.get("b").has_value());            // deletion survived
     CHECK(db2.size() == 1);
@@ -80,20 +80,20 @@ static void test_persistence() {
 static void test_crc_detects_corruption() {
     std::printf("[test_crc_detects_corruption]\n");
 
-    ledgerdb::Record rec;
+    alphadb::Record rec;
     rec.timestamp = 42;
     rec.key = "k";
     rec.value = "v";
-    auto bytes = ledgerdb::encode(rec);
+    auto bytes = alphadb::encode(rec);
 
     // A clean record decodes fine.
-    auto ok = ledgerdb::decode(bytes.data(), bytes.size());
+    auto ok = alphadb::decode(bytes.data(), bytes.size());
     CHECK(ok.ok == true);
     CHECK(ok.record.value == "v");
 
     // Flip one byte in the value -> CRC must reject it.
     bytes.back() ^= 0xFF;
-    auto bad = ledgerdb::decode(bytes.data(), bytes.size());
+    auto bad = alphadb::decode(bytes.data(), bytes.size());
     CHECK(bad.ok == false);
 }
 
@@ -102,7 +102,7 @@ static void test_torn_tail_recovery() {
     std::printf("[test_torn_tail_recovery]\n");
     std::string f = fresh_file("torn");
     {
-        ledgerdb::Engine db(f);
+        alphadb::Engine db(f);
         db.put("good", "value");
     }
     // Simulate a crash mid-write: append a few garbage bytes to the file.
@@ -112,7 +112,7 @@ static void test_torn_tail_recovery() {
         out.write(junk, sizeof(junk));
     }
     // Recovery should skip the torn tail and still see the good key.
-    ledgerdb::Engine db2(f);
+    alphadb::Engine db2(f);
     CHECK(db2.get("good").value() == "value");
     CHECK(db2.size() == 1);
     // And it should be usable afterwards (tail was truncated cleanly).

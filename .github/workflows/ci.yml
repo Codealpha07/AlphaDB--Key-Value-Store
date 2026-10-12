@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Debug
+
+      # --config and -C matter on Windows, where the Visual Studio generator
+      # builds several configurations; without them ctest finds no tests.
+      - name: Build
+        run: cmake --build build --config Debug
+
+      # --no-tests=error fails the job if no tests were found, instead of
+      # reporting success after running nothing.
+      - name: Test
+        run: ctest --test-dir build -C Debug --output-on-failure --no-tests=error
+
+  sanitizers:
+    name: ubuntu-latest (ASan + UBSan)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # -fno-sanitize-recover=all makes any UBSan report fail the test run.
+      - name: Configure
+        run: >
+          cmake -B build -DCMAKE_BUILD_TYPE=Debug
+          -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=all"
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --no-tests=error
