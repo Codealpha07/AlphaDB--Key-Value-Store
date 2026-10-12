@@ -8,6 +8,7 @@
 
 #ifdef _WIN32
 #include <io.h>
+#include <share.h>     // _SH_DENYNO for _sopen_s
 #include <sys/stat.h>
 
 #ifndef O_RDWR
