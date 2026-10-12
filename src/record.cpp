@@ -1,7 +1,7 @@
 #include "record.hpp"
 #include <cstring>  // std::memcpy
 
-namespace ledgerdb {
+namespace alphadb {
 
 // ---------------------------------------------------------------------------
 // CRC32 — table-based implementation of the standard polynomial 0xEDB88320.
@@ -105,4 +105,4 @@ DecodeResult decode(const uint8_t* buf, std::size_t available) {
     return res;
 }
 
-} // namespace ledgerdb
+} // namespace alphadb

@@ -79,7 +79,7 @@ static inline int file_ftruncate(int fd, int64_t length) {
 }
 #endif
 
-namespace ledgerdb {
+namespace alphadb {
 
 // ---------------------------------------------------------------------------
 // Construction / destruction
@@ -238,4 +238,4 @@ std::size_t Engine::size() {
     return keydir_.size();
 }
 
-} // namespace ledgerdb
+} // namespace alphadb

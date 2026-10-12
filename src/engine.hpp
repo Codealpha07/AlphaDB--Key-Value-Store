@@ -18,7 +18,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace ledgerdb {
+namespace alphadb {
 
 class Engine {
 public:
@@ -65,4 +65,4 @@ private:
     std::mutex mu_;
 };
 
-} // namespace ledgerdb
+} // namespace alphadb

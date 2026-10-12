@@ -1,4 +1,4 @@
-# LedgerDB
+# AlphaDB
 
 A small, persistent **key-value store** written in C++17. Writes are appended
 to a log file on disk; an in-memory hash table maps each key to the byte offset
@@ -22,18 +22,18 @@ explained.
 ```bash
 # with CMake
 cmake -B build && cmake --build build
-./build/ledgerdb                 # data file ./ledgerdb.data, port 5555
+./build/alphadb                 # data file ./alphadb.data, port 5555
 
 # or a one-line g++ build
-g++ -std=c++17 -pthread src/main.cpp src/server.cpp src/record.cpp src/engine.cpp -o ledgerdb
-./ledgerdb mydata.data 5555
+g++ -std=c++17 -pthread src/main.cpp src/server.cpp src/record.cpp src/engine.cpp -o alphadb
+./alphadb mydata.data 5555
 ```
 
 ## Try it
 
 ```bash
 # in one terminal
-./ledgerdb
+./alphadb
 
 # in another
 nc localhost 5555
@@ -47,8 +47,8 @@ PING              # -> +PONG
 ## Run the tests
 
 ```bash
-g++ -std=c++17 -pthread tests/test_engine.cpp src/record.cpp src/engine.cpp -o ledgerdb_tests
-./ledgerdb_tests
+g++ -std=c++17 -pthread tests/test_engine.cpp src/record.cpp src/engine.cpp -o alphadb_tests
+./alphadb_tests
 ```
 
 Tests cover put/get/overwrite/delete, durability across a restart, CRC catching

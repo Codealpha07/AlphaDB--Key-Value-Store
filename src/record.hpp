@@ -25,7 +25,7 @@
 #include <string>
 #include <vector>
 
-namespace ledgerdb {
+namespace alphadb {
 
 // value_size is set to this sentinel when the record is a "tombstone" — our
 // marker for a deleted key. A tombstone has a key but no value bytes.
@@ -62,4 +62,4 @@ struct DecodeResult {
 // doesn't match (which is how we detect a torn record after a crash).
 DecodeResult decode(const uint8_t* buf, std::size_t available);
 
-} // namespace ledgerdb
+} // namespace alphadb

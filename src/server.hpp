@@ -22,7 +22,7 @@ using socket_t = std::uintptr_t;
 using socket_t = int;
 #endif
 
-namespace ledgerdb {
+namespace alphadb {
 
 class Server {
 public:
@@ -38,4 +38,4 @@ private:
     int      port_;
 };
 
-} // namespace ledgerdb
+} // namespace alphadb
